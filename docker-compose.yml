@@ -27,9 +27,8 @@ services:
     ports:
       - "27017:27017"
     #Definimos las variables de entorno
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=gamebackadmin
-      - MONGO_INITDB_ROOT_PASSWORD=qofiCmNKohqTwrMO
+    env_file:
+      - .env.development
     #Evitar logs
     #command: mongod --quiet --logpath /dev/null
     #Asignamos el volume donde se guardarán los datos y pasamos la ruta donde mongo guarda los datos.
