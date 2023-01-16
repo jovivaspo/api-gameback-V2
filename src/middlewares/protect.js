@@ -1,28 +1,47 @@
-const jwt = require('jsonwebtoken')
-const protect = (req,res,next)=>{
-  
-    const authorization = req.get('authorization')
-    console.log(authorization)
-    let token = ''
+const jwt = require("jsonwebtoken");
+const Users = require("../models/Users");
 
-    if(authorization && authorization.toLowerCase().startsWith('bearer')){
+const protect = (req, res, next) => {
+  try {
+    const path = req.route.path;
 
-        token = authorization.substring(7)
-        //console.log(token)
+    const authorization = req.get("Authorization");
 
+    let token = "";
+
+    if (authorization && authorization.toLowerCase().startsWith("bearer")) {
+      token = authorization.substring(7);
+      //console.log(token)
     }
 
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-    console.log(decodedToken)
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+      if (err) {
+        res.status(401);
+        const error = new Error(err.name);
+        return next(error);
+      }
 
-    if(!token || !decodedToken.id){
-        const error = new Error ('Missing or invalid token')
-        res.status(401)
-        next(error)
-    }else{
-        next()
-    }
+      const user = await Users.findOne({ email: decodedToken.email });
 
-}
+      if (!user) {
+        res.status(401);
+        const error = new Error("Permission denied");
+        return next(error);
+      }
 
-module.exports = protect
+      if (path === "/" && !user.role.includes("admin")) {
+        res.status(401);
+        const error = new Error("You dont have permission for this action");
+        return next(error);
+      }
+
+      next();
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401);
+    return next(error);
+  }
+};
+
+module.exports = protect;

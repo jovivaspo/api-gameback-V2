@@ -3,8 +3,12 @@ const cors = require("cors");
 const notFound = require("./middlewares/notFound");
 const handleError = require("./middlewares/handleError");
 const helmet = require("helmet");
+const createAdmin = require("./services/createAdmin");
 
 const app = express();
+
+/*Verify or created admin*/
+createAdmin();
 
 //Settings
 app.set("port", process.env.PORT || 8000);

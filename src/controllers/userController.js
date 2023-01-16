@@ -5,11 +5,10 @@ const createToken = require("../helpers/jwt");
 const userController = {};
 
 userController.listUsers = (req, res) => {
-  console.log("GET USERS");
   Users.find({})
     .then((users) => {
       if (users.length === 0) {
-        return res.status(404).send({ message: "there are not users yet" });
+        return res.status(404).send({ message: "There are not users yet" });
       }
 
       res.status(200).json(users).end();
@@ -25,25 +24,25 @@ userController.deleteUser = async (req, res, next) => {
     console.log(userDeleted);
     if (userDeleted.videogames.length > 0) {
       userDeleted.videogames.forEach(async (el) => {
-        console.log("Borrando", el.toString());
         const borrado = await Videogames.findById(el.toString());
-        console.log(borrado);
       });
     }
-    res.status(200).json(userDeleted);
+
+    await Users.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "User Deleted" });
   } catch (err) {
     next(err);
   }
 };
 
 userController.createUsers = (req, res, next) => {
-  console.log("CREATE USER");
   const { name, email, password } = req.body;
 
   Users.findOne({ email })
     .then((user) => {
       if (user) {
-        console.log("Usuario existe ya");
+        console.log("This user exist yet");
         res.status(400);
         const err = new Error("This email exists yet");
         err.name = "UserExistYet";
@@ -80,7 +79,6 @@ userController.createUsers = (req, res, next) => {
 };
 
 userController.login = (req, res, next) => {
-  console.log("LOGIN");
   const { email, password } = req.body;
 
   Users.findOne({ email })

@@ -3,11 +3,8 @@ const protect = require("../middlewares/protect");
 const videogameController = require("../controllers/videogameController");
 
 const router = Router();
-/***********PARA MI************************* */
-router.route("/").get(protect, videogameController.list);
 
-router.route("/delete/:id").delete(protect, videogameController.delete);
-/***************************************** */
+router.route("/").get(protect, videogameController.list);
 
 router.route("/list/:userId").get(protect, videogameController.listGamesUser);
 

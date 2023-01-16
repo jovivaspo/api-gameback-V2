@@ -30,7 +30,7 @@ services:
     env_file:
       - .env.development
     #Evitar logs
-    #command: mongod --quiet --logpath /dev/null
+    command: mongod --quiet --logpath /dev/null
     #Asignamos el volume donde se guardarán los datos y pasamos la ruta donde mongo guarda los datos.
     #Rutas para otros tipo de bases de datos:
     # mysql -> /var/lib/mysql
