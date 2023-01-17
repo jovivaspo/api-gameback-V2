@@ -1,23 +1,26 @@
-const Users = require('../models/Users')
+const Users = require("../models/Users");
 
-const orderGames = async (userId) =>{
-    console.log('Devolviendo los juegos ordenados');
-    
-    let games = {
-        'Not Status':[],
-        'Not Started':[],
-        'In Progress':[],
-        Completed:[],
-        Abandoned:[]
-    }  
+const orderGames = async (userId) => {
+  //console.log('Devolviendo los juegos ordenados');
 
-    const user = await Users.findById(userId).populate({path:'videogames', options: { sort: { 'status': 1 ,'position':1} }})
+  let games = {
+    "Not Status": [],
+    "Not Started": [],
+    "In Progress": [],
+    Completed: [],
+    Abandoned: [],
+  };
 
-    user.videogames.forEach(el=>{
-        games[el.status] = games[el.status].concat(el)
-    })
+  const user = await Users.findById(userId).populate({
+    path: "videogames",
+    options: { sort: { status: 1, position: 1 } },
+  });
 
-    return games
-}
+  user.videogames.forEach((el) => {
+    games[el.status] = games[el.status].concat(el);
+  });
 
-module.exports = orderGames
+  return games;
+};
+
+module.exports = orderGames;
