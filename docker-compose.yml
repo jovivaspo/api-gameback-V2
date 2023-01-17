@@ -9,7 +9,7 @@ services:
     build:
       #Ruta actual de Docker-compose-dev
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     #Asignamos puertos para el servicio
     ports:
       - "8000:8000"
