@@ -52,7 +52,7 @@ videogameController.add = async (req, res, next) => {
     });
     const videogameSaved = await newGame.save();
 
-    console.log(videogameSaved);
+    //console.log(videogameSaved);
 
     user.videogames = user.videogames.concat(videogameSaved._id);
 
@@ -68,12 +68,12 @@ videogameController.add = async (req, res, next) => {
 };
 
 videogameController.updateList = (req, res, next) => {
-  console.log("Actualizando con nueva versión");
+  //console.log("Actualizando con nueva versión");
   const userId = req.params.userId;
 
   const { source, destination, snapgames } = req.body;
 
-  //console.log(source, destination, snapgames)
+  ////console.log(source, destination, snapgames)
 
   const updateSource = () => {
     return Promise.all(
@@ -98,7 +98,7 @@ videogameController.updateList = (req, res, next) => {
 
   Promise.all([updateSource(), updateDestination()])
     .then((items) => {
-      console.log("BD Actualizada");
+      //console.log("BD Actualizada");
       res.status(200).json({ message: "Update successfully" });
     })
     .catch((err) => next(err));
@@ -110,7 +110,7 @@ videogameController.listGamesUser = async (req, res, next) => {
 
     const games = await orderGames(userId);
 
-    console.log("Comprobando", games);
+    //console.log("Comprobando", games);
 
     res.status(200).json(games);
   } catch (error) {
@@ -163,7 +163,7 @@ videogameController.getGame = async (req, res, next) => {
 
     const user = await Users.findById(userId).populate("videogames");
 
-    console.log(user);
+    //console.log(user);
 
     const game = user.videogames.filter((el) => el._id.toString() === gameId);
 
@@ -177,7 +177,7 @@ videogameController.updateGame = async (req, res, next) => {
   try {
     const gameId = req.params.gameId;
     const { rating, comment, status, position } = req.body;
-    console.log(rating, comment, status);
+    //console.log(rating, comment, status);
 
     const gameUpdate = await Videogames.findByIdAndUpdate(gameId, {
       rating,

@@ -15,11 +15,8 @@ services:
       - "8000:8000"
     links:
       - mongodb
-    volumes:
-      # Vinculamos la ruta local con la ruta del contenedor para reflejar los cambios realizados durante el desarrollo de la aplicación
-      - .:/usr/src/app
     env_file:
-      - .env.development
+      - .env.production
   mongodb:
     #Definimos la imagen a partir de la cual se genera el servicio mongodb
     image: mongo
@@ -28,7 +25,7 @@ services:
       - "27017:27017"
     #Definimos las variables de entorno
     env_file:
-      - .env.development
+      - .env.production
     #Evitar logs
     command: mongod --quiet --logpath /dev/null
     #Asignamos el volume donde se guardarán los datos y pasamos la ruta donde mongo guarda los datos.

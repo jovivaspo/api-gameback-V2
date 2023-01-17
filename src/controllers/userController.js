@@ -21,7 +21,7 @@ userController.deleteUser = async (req, res, next) => {
     const id = req.params.id;
 
     const userDeleted = await Users.findById(id);
-    console.log(userDeleted);
+    //console.log(userDeleted);
     if (userDeleted.videogames.length > 0) {
       userDeleted.videogames.forEach(async (el) => {
         const borrado = await Videogames.findById(el.toString());
@@ -42,7 +42,7 @@ userController.createUsers = (req, res, next) => {
   Users.findOne({ email })
     .then((user) => {
       if (user) {
-        console.log("This user exist yet");
+        //console.log("This user exist yet");
         res.status(400);
         const err = new Error("This email exists yet");
         err.name = "UserExistYet";
@@ -56,7 +56,7 @@ userController.createUsers = (req, res, next) => {
       });
 
       newUser.encryptPassword(password).then((hashPassword) => {
-        console.log(hashPassword);
+        //console.log(hashPassword);
         newUser.password = hashPassword;
         newUser
           .save()
@@ -91,7 +91,7 @@ userController.login = (req, res, next) => {
         user
           .matchPassword(password)
           .then((match) => {
-            // console.log(match)
+            // //console.log(match)
             if (match) {
               const { id, email } = user;
               const token = createToken(id, email);
