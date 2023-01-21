@@ -8,7 +8,7 @@ const createAdmin = require("./services/createAdmin");
 
 const app = express();
 
-const nameFile = "DC2B0F6B913F64385D45F37DBA78B5FE.txt";
+const nameFile = "03AE6B7A9F3CD4C727A91AF0D9EAC481";
 
 /*Verify or created admin*/
 createAdmin();
@@ -23,12 +23,9 @@ app.use(helmet());
 
 //SSL VERIFCATION
 //SSL
-app.get(
-  "/.well-known/pki-validation/DC2B0F6B913F64385D45F37DBA78B5FE.txt",
-  (req, res) => {
-    res.sendFile(path.resolve("./" + nameFile));
-  }
-);
+app.get("/.well-known/pki-validation/" + nameFile, (req, res) => {
+  res.sendFile(path.resolve("./" + nameFile));
+});
 
 //Routes
 app.use("/api/users", require("./routes/users"));
