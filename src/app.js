@@ -8,7 +8,7 @@ const createAdmin = require("./services/createAdmin");
 
 const app = express();
 
-const nameFile = "03AE6B7A9F3CD4C727A91AF0D9EAC481";
+const nameFile = "03AE6B7A9F3CD4C727A91AF0D9EAC481.txt";
 
 /*Verify or created admin*/
 createAdmin();
