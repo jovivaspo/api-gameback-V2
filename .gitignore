@@ -1,3 +1,4 @@
 /Requets
 /node_modules
-.env
+.env*
+*.txt
